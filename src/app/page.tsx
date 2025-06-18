@@ -1,13 +1,24 @@
+"use client";
+
+import { useState } from "react";
+import AlgorithmSidebar from "../components/AlgorithmSelector/AlgorithmSidebar";
+import { AlgorithmOption } from "../components/AlgorithmSelector/AlgorithmType";
+
 export default function HomePage() {
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<AlgorithmOption | null>(null);
+
   return (
-    <section className="text-center mt-12">
-      <h2 className="text-3xl font-bold mb-4">¡Bienvenido!</h2>
-      <p className="text-lg text-gray-700">
-        Este será tu visualizador interactivo de algoritmos. 🚀
-      </p>
-      <p className="mt-2 text-gray-500">
-        A medida que avances, aquí se mostrarán animaciones de ordenamiento y búsqueda de rutas.
-      </p>
-    </section>
+    <div className="flex flex-col md:flex-row gap-4 mt-6">
+      <AlgorithmSidebar onSelect={setSelectedAlgorithm} />
+      <div className="flex-grow p-6 bg-gray-800 rounded shadow border border-gray-700">
+        {selectedAlgorithm ? (
+          <p className="text-xl font-semibold text-white">
+            Algoritmo seleccionado: {selectedAlgorithm.name}
+          </p>
+        ) : (
+          <p className="text-gray-400">Selecciona un algoritmo para comenzar.</p>
+        )}
+      </div>
+    </div>
   );
 }
