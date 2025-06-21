@@ -1,4 +1,4 @@
-import { bubbleSortSteps } from "./sortingAlgorithms";
+import { bubbleSortSteps } from "../sortingAlgorithms/bubbleSortSteps";
 
 describe("bubbleSortSteps", () => {
   it("debe devolver pasos que terminan con el array ordenado", () => {
@@ -28,4 +28,19 @@ describe("bubbleSortSteps", () => {
 
     expect(input).toEqual(copy);
   });
+
+  it("maneja un array vacío sin errores", () => {
+    const steps = bubbleSortSteps([]);
+    expect(steps).toEqual([
+      { array: [], activeIndices: [], swapped: false },
+    ]);
+  });
+
+  it("maneja un array con un solo elemento", () => {
+    const steps = bubbleSortSteps([7]);
+    expect(steps).toEqual([
+      { array: [7], activeIndices: [], swapped: false },
+    ]);
+  });
+
 });

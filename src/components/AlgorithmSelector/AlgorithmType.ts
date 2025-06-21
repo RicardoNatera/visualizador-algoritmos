@@ -8,6 +8,7 @@ export type AlgorithmOption = {
 
 export const algorithmOptions: AlgorithmOption[] = [
   { name: "Bubble Sort", key: "bubble", category: "ordenamiento" },
+  { name: "Selection Sort", key: "selection", category: "ordenamiento" },
   { name: "Insertion Sort", key: "insertion", category: "ordenamiento" },
   { name: "BFS", key: "bfs", category: "rutas" },
   { name: "Dijkstra", key: "dijkstra", category: "rutas" },

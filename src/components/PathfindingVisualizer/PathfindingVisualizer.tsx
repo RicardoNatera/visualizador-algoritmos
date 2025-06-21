@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { GridNode } from "./types";
-import { bfs as bfsFunction } from "./bfs";
+import { bfs as bfsFunction } from "@/components/PathfindingVisualizer/algorithms/bfs";
 
 const NUM_ROWS = 20;
 const NUM_COLS = 40;
