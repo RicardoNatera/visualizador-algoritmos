@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { GridNode } from "./types";
 import { bfs as bfsFunction } from "@/components/PathfindingVisualizer/algorithms/bfs";
+import { dijkstra as dijkstraFunction } from "@/components/PathfindingVisualizer/algorithms/dijkstra";
+import { astar as astarFunction } from "@/components/PathfindingVisualizer/algorithms/astar";
 
 const NUM_ROWS = 20;
 const NUM_COLS = 40;
@@ -37,6 +40,7 @@ const PathfindingVisualizer: React.FC<Props> = ({ selectedKey }) => {
     setEndNode(null);
     setMode("wall");
     setIsAnimating(false);
+    toast("Grid reseteado");
   };
 
   const handleCellClick = (row: number, col: number) => {
@@ -75,7 +79,57 @@ const PathfindingVisualizer: React.FC<Props> = ({ selectedKey }) => {
     const end = newGrid[endNode.row][endNode.col];
 
     const { visitedNodesInOrder, pathNodes } = bfsFunction(newGrid, start, end);
+    await animate(visitedNodesInOrder, pathNodes, newGrid);
+    setIsAnimating(false);
+  };
 
+  const dijkstra = async () => {
+    if (!startNode || !endNode) return;
+    setIsAnimating(true);
+
+    const newGrid = grid.map((row) =>
+      row.map((node) => ({
+        ...node,
+        isVisited: false,
+        previousNode: null,
+        distance: Infinity,
+      }))
+    );
+
+    const start = newGrid[startNode.row][startNode.col];
+    const end = newGrid[endNode.row][endNode.col];
+
+    const { visitedNodesInOrder, pathNodes } = dijkstraFunction(newGrid, start, end);
+    await animate(visitedNodesInOrder, pathNodes, newGrid);
+    setIsAnimating(false);
+  };
+
+  const astar = async () => {
+    if (!startNode || !endNode) return;
+    setIsAnimating(true);
+
+    const newGrid = grid.map((row) =>
+      row.map((node) => ({
+        ...node,
+        isVisited: false,
+        previousNode: null,
+        distance: Infinity,
+      }))
+    );
+
+    const start = newGrid[startNode.row][startNode.col];
+    const end = newGrid[endNode.row][endNode.col];
+
+    const { visitedNodesInOrder, pathNodes } = astarFunction(newGrid, start, end);
+    await animate(visitedNodesInOrder, pathNodes, newGrid);
+    setIsAnimating(false);
+  };
+
+  const animate = async (
+    visitedNodesInOrder: GridNode[],
+    pathNodes: GridNode[],
+    newGrid: GridNode[][]
+  ) => {
     for (let i = 0; i < visitedNodesInOrder.length; i++) {
       await new Promise((res) => setTimeout(res, 20));
       const node = visitedNodesInOrder[i];
@@ -83,6 +137,11 @@ const PathfindingVisualizer: React.FC<Props> = ({ selectedKey }) => {
         newGrid[node.row][node.col].type = "visited";
         setGrid([...newGrid]);
       }
+    }
+
+    if (pathNodes.length === 0) {
+      toast.error("No hay un camino posible entre el inicio y el final");
+      return;
     }
 
     for (let i = 0; i < pathNodes.length; i++) {
@@ -93,16 +152,29 @@ const PathfindingVisualizer: React.FC<Props> = ({ selectedKey }) => {
         setGrid([...newGrid]);
       }
     }
-
-    setIsAnimating(false);
+    if (pathNodes.length > 0) {
+      toast.success("¡Camino encontrado exitosamente!");
+    }
   };
 
   const runAlgorithm = async () => {
-    if (selectedKey === "bfs") {
-      await bfs();
-    } else {
-      alert(`El algoritmo "${selectedKey}" aún no está implementado.`);
+    if (!startNode || !endNode) {
+      toast.error("Debes establecer el punto de inicio y fin antes de ejecutar");
+      return;
     }
+    switch (selectedKey) {
+    case "bfs":
+      await bfs();
+      break;
+    case "dijkstra":
+      await dijkstra();
+      break;
+    case "astar":
+      await astar();
+      break;
+    default:
+      console.warn("Algoritmo no reconocido");
+  }
   };
 
   useEffect(() => {

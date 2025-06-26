@@ -14,6 +14,12 @@ export function getNeighbors(node: GridNode, grid: GridNode[][]): GridNode[] {
 
 export function reconstructPath(start: GridNode, end: GridNode): GridNode[] {
   const path: GridNode[] = [];
+
+  // Si end no tiene previousNode y no es el start, no hay camino
+  if (end.previousNode === null && end !== start) {
+    return [];
+  }
+
   let current: GridNode | null | undefined = end;
 
   while (current && current !== start) {
@@ -21,6 +27,8 @@ export function reconstructPath(start: GridNode, end: GridNode): GridNode[] {
     current = current.previousNode;
   }
 
-  if (current === start) path.unshift(start); // optional: include start
+  if (current === start) path.unshift(start);
+
   return path;
 }
+
