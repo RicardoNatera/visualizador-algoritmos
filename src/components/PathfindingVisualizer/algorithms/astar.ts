@@ -1,5 +1,5 @@
 import { GridNode } from "../types";
-import { getNeighbors, reconstructPath } from "./utils";
+import { reconstructPath } from "./utils";
 
 type AStarResult = {
   visitedNodesInOrder: GridNode[];

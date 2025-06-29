@@ -84,8 +84,7 @@ const PathfindingVisualizer: React.FC<Props> = ({ selectedKey }) => {
 
   const animate = async (
     visitedNodesInOrder: GridNode[],
-    pathNodes: GridNode[],
-    newGrid: GridNode[][]
+    pathNodes: GridNode[]
   ) => {
     for (const node of visitedNodesInOrder) {
       if (shouldCancelRef.current) return;
@@ -173,7 +172,7 @@ const PathfindingVisualizer: React.FC<Props> = ({ selectedKey }) => {
 
     const algorithm = algorithmMap[selectedKey];
     const { visitedNodesInOrder, pathNodes } = algorithm(newGrid, start, end);
-    await animate(visitedNodesInOrder, pathNodes, newGrid);
+    await animate(visitedNodesInOrder, pathNodes);
 
     setIsAnimating(false);
     shouldCancelRef.current = false;
