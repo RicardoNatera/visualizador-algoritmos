@@ -5,6 +5,7 @@ import { bubbleSortSteps } from "./sortingAlgorithms/bubbleSortSteps";
 import { selectionSortSteps } from "./sortingAlgorithms/selectionSortSteps";
 import { insertionSortSteps } from "./sortingAlgorithms/insertionSortSteps";
 import { SortStep } from "./types";
+import { toast } from "react-hot-toast";
 
 type SortingAlgorithm = "bubble" | "selection" | "insertion";
 
@@ -25,6 +26,11 @@ const SortingVisualizer: React.FC<{ algorithm: SortingAlgorithm }> = ({ algorith
   };
 
   const startSorting = () => {
+    
+    if (array.length === 0) {
+      toast.error("El array está vacío. Genera uno nuevo.");
+      return;
+    }
     let generatedSteps: SortStep[] = [];
 
     if (algorithm === "bubble") {
@@ -49,6 +55,7 @@ const SortingVisualizer: React.FC<{ algorithm: SortingAlgorithm }> = ({ algorith
 
     if (stepIndex >= steps.length) {
       setIsSorting(false);
+      toast.success("Ordenamiento completado ✅");
       return;
     }
 
@@ -62,6 +69,18 @@ const SortingVisualizer: React.FC<{ algorithm: SortingAlgorithm }> = ({ algorith
 
     return () => clearTimeout(timeout);
   }, [isSorting, stepIndex, steps]);
+
+  useEffect(() => {
+    if (isSorting) {
+      toast("Algoritmo cambiado. Se reinició la animación.");
+      setIsSorting(false);
+      setSteps([]);
+      setStepIndex(0);
+      setActiveIndices([]);
+      setSwapped(false);
+    }
+  }, [algorithm]);
+
 
   return (
     <div className="p-4 bg-gray-800 rounded shadow border border-gray-700">
