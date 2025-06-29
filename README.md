@@ -27,7 +27,7 @@ Este proyecto es una aplicación interactiva desarrollada con **Next.js 15** que
 ## ⚙️ Instalación local
 
 ```bash
-git clone https://github.com/tu-usuario/visualizador-algoritmos.git
+git clone https://github.com/RicardoNatera/visualizador-algoritmos.git
 cd visualizador-algoritmos
 npm install
 npm run dev
@@ -46,4 +46,4 @@ npm run test
 
 ## 🌐 Versión en producción
 
-> 📎 [Click Here](https://vscode-portfolio-eight-ochre.vercel.app)
+> 📎 [Click Here](https://visualizador-algoritmos-tan.vercel.app/)

@@ -25,11 +25,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Ricardo Natera", url: "https://github.com/RicardoNatera" }],
   creator: "Ricardo Natera",
-  metadataBase: new URL("https://visualizador-algoritmos.vercel.app"), // Reemplaza si la URL final es distinta
+  metadataBase: new URL("https://visualizador-algoritmos-tan.vercel.app"), 
   openGraph: {
     title: "Visualizador de Algoritmos",
     description: "Explora visualmente algoritmos de ordenamiento y rutas.",
-    url: "https://visualizador-algoritmos.vercel.app", // Reemplaza si la URL final es distinta
+    url: "https://visualizador-algoritmos-tan.vercel.app", 
     siteName: "Visualizador de Algoritmos",
     locale: "es_ES",
     type: "website",
